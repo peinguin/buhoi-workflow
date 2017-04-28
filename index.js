@@ -44,7 +44,7 @@ function create ({
 		}
 		return Promise.resolve(methods[name])
 			.then(guard => guard ? Promise.try(() => guard(id, name, args)) : undefined)
-			.then(() => engine.run(transition))
+			.then(() => runner(transition))
 			.tap(state => {
 				if (!state) {
 					throw new IllegalTransitionError(transition)

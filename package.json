@@ -1,0 +1,17 @@
+{
+  "name": "buhoi-workflow",
+  "version": "1.0.0",
+  "description": "Workflow engine",
+  "main": "index.js",
+  "repository": "git@github.com:titarenko/buhoi-workflow.git",
+  "author": "Constantin Titarenko <constantin.titarenko@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "cron": "^1.2.1",
+    "pegjs": "^0.10.0"
+  },
+  "scripts": {
+    "release": "npm version patch && npm publish && git push && git push --tags"
+  },
+}

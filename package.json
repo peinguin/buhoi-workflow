@@ -1,6 +1,6 @@
 {
   "name": "buhoi-workflow",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Workflow engine",
   "main": "lib/index.js",
   "repository": "git@github.com:titarenko/buhoi-workflow.git",

@@ -1,18 +1,32 @@
 const buhoiWorkflow = require('../lib')
 
 describe('buhoi-workflow', function () {
-	it('should not crash', function (done) {
-		let state = 'left'
-		const fsm = buhoiWorkflow({
-			definition: `
-				left:
-					go tick -> right
-				right:
-					go tack -> left
-			`,
+	let state, workflow
+	const definition = `
+		left:
+			go tick -> right (action fired)
+		right:
+			go tack -> left (another action fired)
+	`
+
+	const fsmApply = transition => {
+		if (workflow.check(state, transition)) {
+			state = transition.to
+			return transition.from
+		}
+	}
+
+	it('should switch state and run side effect', function (done) {
+		state = 'left'
+		const goTickMethodSpy = sinon.spy()
+		const actionFiredMethodSpy = sinon.spy()
+
+		workflow = buhoiWorkflow({
 			methods: {
-				goTick: () => console.log('tick'),
-				goTack: () => console.log('tack'),
+				goTick: goTickMethodSpy,
+				actionFired: actionFiredMethodSpy
+				goTack: (id, name, args) => '"go tack" was called',
+				anotherActionFired: transition => '"another action fired" was called'
 			},
 			apply: transition => fsm.check(state, transition) ? state = transition.to : undefined,
 			debug: console.log,
